@@ -1,0 +1,9 @@
+{
+  "customers": [
+    { "id": "1", "name": "John Doe", "email": "jdoe@gmail.com", "age": 35 },
+    { "id": "2", "name": "Steve Smith", "email": "ssmith@gmail.com", "age": 25 },
+    { "id": "3", "name": "Sarah Same", "email": "ssame@gmail.com", "age": 40 },
+    { "id": "4", "name": "Jeff Domer", "email": "jdomer@gmail.com", "age": 22 },
+    { "id": "5", "name": "Jay Lo", "email": "jlo@gmail.com", "age": 33 }
+  ]
+}
