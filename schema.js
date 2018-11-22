@@ -1,4 +1,5 @@
-const axios = require('axios');
+// const axios = require('axios');
+import axios from 'axios';
 
 const {
   GraphQLObjectType,
@@ -36,27 +37,74 @@ const RootQuery = new GraphQLObjectType({
       args: {
         id: { type: GraphQLString },
       },
-      resolve(parentValue, args) {
+      async resolve(parentValue, args) {
         // for(let i = 0; i < customers.length; i++) {
         //   if(customers[i].id === args.id){
         //     return customers[i];
         //   }
         // }
-        return axios.get(`http://localhost:3000/customers/${args.id}`)
-          .then(res => res.data);
+        const res = await axios(`http://localhost:3000/customers/${args.id}`)
+        return res.data;
       }
     },
     customers: {
       type: new GraphQLList(CustomerType),
-      resolve(parentValue, args) {
+      async resolve(parentValue, args) {
         // return customers;
-        return axios.get(`http://localhost:3000/customers`)
-          .then(res => res.data);
+        const res = await axios(`http://localhost:3000/customers`)
+        return res.data;
+      }
+    }
+  }
+});
+
+// Mutations
+const mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addCustomer: {
+      type: CustomerType,
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        email: { type: new GraphQLNonNull(GraphQLString) },
+        age: { type: new GraphQLNonNull(GraphQLInt) },
+      },
+      async resolve(parentValue, args) {
+        const res = await axios.post('http://localhost:3000/customers', {
+          name: args.name,
+          email: args.email,
+          age: args.age
+        });
+        return res.data;
+      }
+    },
+    updateCustomer: {
+      type: CustomerType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLString)},
+        name: { type: GraphQLString },
+        email: { type: GraphQLString },
+        age: { type: GraphQLInt },
+      },
+      async resolve(parentValue, args) {
+        const res = await axios.patch(`http://localhost:3000/customers/${args.id}`, args);
+        return res.data;
+      }
+    },
+    deleteCustomer: {
+      type: CustomerType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLString)}
+      },
+      async resolve(parentValue, args) {
+        const res = await axios.delete(`http://localhost:3000/customers/${args.id}`);
+        return res.data;
       }
     }
   }
 });
 
 module.exports = new GraphQLSchema({
-  query: RootQuery
+  query: RootQuery,
+  mutation
 });
