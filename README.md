@@ -1,4 +1,4 @@
-# Project Title
+# Alta (Random Project Name)
 
 A simple express-GraphQL server example able to handle CRUD operations.
 
