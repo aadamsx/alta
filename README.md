@@ -6,6 +6,20 @@ A simple express-GraphQL server example able to handle CRUD operations.
 
 Just clone and npm install.  A json-server is provided to provide data for the server.
 
+Make sure to run both the JSON server and the Development server:
+
+```
+$ npm run dev:server
+```
+
+```
+$ npm run json:server
+```
+
+Then URL: localhost:4000/graphql
+
+From here run the following GraphQL queries:
+
 ### Mutation examples
 
 Add Customer
